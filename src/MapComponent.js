@@ -21,11 +21,11 @@ const MapComponent = ({ locations, mapKey }) => {
                 zoom={10}
                 center={center}
             >
-                {locations.map((location, index) => (
+                {Object.entries(locations).map(([city, data], index) => (
                     <Marker
                         key={index}
-                        position={location.location}
-                        onClick={() => setSelectedLocation(location)}
+                        position={data.location}
+                        onClick={() => setSelectedLocation({ city, urls: data.urls, location: data.location })}
                     />
                 ))}
 
@@ -36,9 +36,23 @@ const MapComponent = ({ locations, mapKey }) => {
                     >
                         <div>
                             <h3>{selectedLocation.city}</h3>
+                            <ul>
+                                {selectedLocation.urls.map((url, idx) => (
+                                    <li key={idx}>
+                                        <a
+                                            href={url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            style={{color: 'blue', textDecoration: 'underline'}}
+                                        >
+                                            {url}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
                             <p>
                                 <strong>Coordinates:</strong>
-                                <br />
+                                <br/>
                                 Lat: {selectedLocation.location.lat.toFixed(5)},
                                 Lng: {selectedLocation.location.lng.toFixed(5)}
                             </p>
@@ -46,7 +60,7 @@ const MapComponent = ({ locations, mapKey }) => {
                                 href={`https://www.google.com/maps?q=${selectedLocation.location.lat},${selectedLocation.location.lng}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                style={{ color: 'blue', textDecoration: 'underline' }}
+                                style={{color: 'blue', textDecoration: 'underline'}}
                             >
                                 Open in Google Maps
                             </a>

@@ -22,7 +22,7 @@ const App = () => {
             );
             const rows = response.data.values;
             const urls = rows.map(row => row[0]); // Assuming URLs are in the first column
-            const results = [];
+            const results = {}; // Initialize a dictionary to hold city and URL data
 
             console.log(urls);
 
@@ -37,7 +37,10 @@ const App = () => {
                         console.log(response.data);
                         const city = htmlDoc.querySelector('.Localizationstyled__City-sc-gdkcr2-1')?.textContent;
                         console.log(city);
-                        if (city) results.push(city);
+                        if (city) {
+                            if (!results[city]) results[city] = [];
+                            results[city].push(url); // Add the URL to the city's list
+                        }
                     } catch (error) {
                         console.error('Error fetching the page:', error);
                         return null;
@@ -46,8 +49,9 @@ const App = () => {
             }
 
             // Geolocate the cities
-            const geolocated = await Promise.all(
-                results.map(async (city) => {
+            const geolocated = Object.fromEntries(
+                await Promise.all(
+                    Object.entries(results).map(async ([city, urls]) => {
                     try {
                         const res = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json`, {
                             params: {
@@ -55,13 +59,13 @@ const App = () => {
                                 key: MAP_KEY,
                             },
                         });
-                        const location = res.data.results[0]?.geometry.location;
-                        return {city, location};
+                        const geocode = res.data.results[0]?.geometry.location;
+                        return [city, { location: geocode, urls }];
                     } catch {
                         return {city, location: null};
                     }
                 })
-            );
+            ));
 
             setLocations(geolocated);
         } catch (error) {
