@@ -6,7 +6,7 @@ const MapComponent = ({ locations, mapKey }) => {
 
     const mapContainerStyle = {
         width: '100%',
-        height: '1200px',
+        height: '800px',
     };
 
     const center = {

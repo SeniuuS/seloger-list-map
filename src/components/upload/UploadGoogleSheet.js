@@ -19,22 +19,23 @@ const UploadGoogleSheet = ({ onProcess }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-            <div>
+        <>
+            <form className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
                 <label>Google Sheet URL:</label>
-                <input
-                    type="text"
-                    value={sheetUrl}
-                    onChange={(e) => setSheetUrl(e.target.value)}
-                    placeholder="Enter the Google Sheet URL"
-                    className="form-control form-control-dark text-bg-dark"
-                />
-            </div>
+                    <input
+                        type="text"
+                        value={sheetUrl}
+                        onChange={(e) => setSheetUrl(e.target.value)}
+                        placeholder="Enter the Google Sheet URL"
+                        className="form-control form-control-dark text-bg-dark"
+                    />
+            </form>
 
             <div className="text-end">
-                <button type="submit" className="btn btn-warning">Process Sheet</button>
+                <br/>
+                <button type="submit" className="btn btn-warning" onClick={handleSubmit}>Process Sheet</button>
             </div>
-        </form>
+        </>
     );
 };
 

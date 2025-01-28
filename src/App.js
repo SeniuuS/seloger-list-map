@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
-import MapComponent from './components/map/MapComponent';
 import MapService from "./services/MapService";
 import Header from "./components/structure/Header";
+import Footer from "./components/structure/Footer";
+import Body from "./components/structure/Body";
 
 const App = () => {
     const [locations, setLocations] = useState([]);
@@ -18,10 +19,11 @@ const App = () => {
     };
 
     return (
-        <div>
-            <Header processGoogleSheet={processGoogleSheet} />
-            <MapComponent locations={locations} mapKey={process.env.REACT_APP_MAP_KEY}/>
-        </div>
+        <>
+            <Header processGoogleSheet={processGoogleSheet}/>
+            <Body locations={locations} />
+            <Footer />
+        </>
     );
 };
 
