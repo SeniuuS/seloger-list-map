@@ -10,7 +10,6 @@ const App = () => {
     // Process data from Google Sheets
     const processGoogleSheet = async (sheetId) => {
         try {
-            console.log(sheetId);
             const geolocated = await MapService.getLocationsForGoogleSheet(sheetId);
             setLocations(geolocated);
         } catch (error) {
