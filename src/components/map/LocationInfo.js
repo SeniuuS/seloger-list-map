@@ -14,7 +14,7 @@ class LocationInfo extends React.Component {
                         <h6 className="mb-0"><strong>{this.props.city}</strong></h6>
                         <p className="mb-0 opacity-75">{this.props.data.urls}</p>
                     </div>
-                    <small className="opacity-50 text-nowrap">{this.props.index}</small>
+                    <small className="opacity-50 text-nowrap">{this.props.data.route && <strong>{this.props.data.route.duration}</strong>}</small>
                 </div>
             </a>
         </>;

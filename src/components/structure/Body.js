@@ -9,7 +9,7 @@ class Body extends React.Component {
 
     clickLocationInfo = (city, data) => {
         if (data && city) {
-            this.setState({selectedLocation: {city, urls: data.urls, location: data.location}});
+            this.setState({selectedLocation: {city, urls: data.urls, location: data.location, route: data.route}});
         } else {
             this.setState({selectedLocation: null});
         }

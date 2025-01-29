@@ -17,9 +17,19 @@ const App = () => {
         }
     };
 
+    const calculateDistance = async (targetAddress) => {
+        if (!targetAddress || locations.length === 0) return;
+        try {
+            const updatedLocationsWithDistance = await MapService.getDistancesForLocation(locations, targetAddress);
+            setLocations(updatedLocationsWithDistance);
+        } catch (error) {
+            console.error('Error fetching Google Sheets data', error);
+        }
+    }
+
     return (
         <>
-            <Header processGoogleSheet={processGoogleSheet}/>
+            <Header processGoogleSheet={processGoogleSheet} calculateDistance={calculateDistance} />
             <Body locations={locations} />
             <Footer />
         </>

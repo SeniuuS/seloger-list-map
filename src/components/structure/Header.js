@@ -1,10 +1,15 @@
 import React, {Component} from "react";
 import UploadGoogleSheet from "../upload/UploadGoogleSheet";
+import SpecifyTargetAddress from "../upload/SpecifyTargetAdress";
 
 class Header extends Component {
-
     processGoogleSheet = (sheetId) => {
         this.props.processGoogleSheet(sheetId);
+    }
+
+    calculateDistance = (targetAddress) => {
+        if (!targetAddress) return;
+        this.props.calculateDistance(targetAddress);
     }
 
     render () {
@@ -15,6 +20,7 @@ class Header extends Component {
                         <span className="fs-3">Carte des villes</span>
                     </p>
 
+                    <SpecifyTargetAddress onProcess={this.calculateDistance} />
                     <UploadGoogleSheet onProcess={this.processGoogleSheet} />
                 </div>
             </div>

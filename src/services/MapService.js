@@ -56,6 +56,34 @@ const MapService = {
             ));
 
         return geolocated;
+    },
+
+    getDistancesForLocation: async (locations, targetAddress) => {
+        const locationWithDuration = Object.fromEntries(
+            await Promise.all(
+                Object.entries(locations).map(async ([city, data]) => {
+                    try {
+                        const res = await axios.get(`https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/directions/json`,
+                            {
+                            params: {
+                                origin: city,
+                                destination: targetAddress,
+                                mode: "driving",
+                                key: process.env.REACT_APP_MAP_KEY,
+                            },
+                        });
+                        const duration = res.data.routes[0].legs[0].duration.text;
+                        const endAddress	 = res.data.routes[0].legs[0].end_address;
+                        return [city, { location: data['location'], urls: data['urls'],
+                            route: {duration: duration, targetAddress: endAddress}
+                        }];
+                    } catch {
+                        return [city, { location: data['location'], urls: data['urls'] }];
+                    }
+                })
+            ));
+
+        return locationWithDuration;
     }
 }
 
